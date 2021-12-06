@@ -2,3 +2,4 @@ files/cookies/2021-cookie.txt
 build
 .gradle
 .idea
+.DS_Store
