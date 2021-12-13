@@ -19,9 +19,17 @@ class Day11 {
     val adjacentCoords =
         (-1..1).flatMap { dy -> (-1..1).map { dx -> dx to dy } }.filter { !(it.first == 0 && it.second == 0) }
 
+    suspend fun partOne(): Int {
+        var octopi = parseInput()
+        var count = 0
 
-    suspend fun partOne(): Long {
-        return 0L
+        (1..100).forEach {
+            val res = step(octopi)
+            octopi = res.first
+            count = res.second
+        }
+
+        return count
     }
 
     private fun increment(octopi: Octopi): Octopi = octopi.map { line -> line.map { it + 1 } }
@@ -33,32 +41,54 @@ class Day11 {
         return adjacentCoords.map { (dx, dy) -> point.first + dx to point.second + dy }
     }
 
-    private tailrec fun flash(octopi: Octopi, toFlash: Map<Point, Boolean> = emptyMap()): Octopi {
-        return if (octopi.flatten().none { it >= 9 })
-            octopi
+    // TODO Fix this
+    private tailrec fun flash(
+        unflashedNines: List<Point>,
+        octopi: Octopi,
+        alreadyFlashed: Map<Point, Boolean> = emptyMap()
+    ): Octopi {
+        return if (unflashedNines.isEmpty())
+            octopi.map { line ->
+                line.map {
+                    if (it > 9) 0 else it
+                }
+            }
         else {
-            val points = coords(octopi)
-            val startingNines = points.filter { (x, y) -> (octopi.get(x, y) ?: 0) >= 9 }
-            val adjacents = startingNines.flatMap { getAdjacentCoords(it) }
+            val adjacents = unflashedNines.flatMap { getAdjacentCoords(it) }
+            val flashers = setOf(unflashedNines).plus(adjacents)
 
-            val flashers = setOf(startingNines).plus(adjacents)
-            val newOctopi = octopi.mapIndexed { x, line -> line.mapIndexed { y, oct ->
-                if (flashers.contains(x to y)) oct + 1 else oct
-            }}
-            return flash(newOctopi)
+            return flash(
+                getGtNine(octopi).filter { (x, y) -> !(alreadyFlashed[x to y] ?: false) },
+                octopi.mapIndexed { x, line ->
+                    line.mapIndexed { y, oct ->
+                        if (flashers.contains(x to y)) oct + 1 else oct
+                    }
+                },
+                alreadyFlashed.plus(unflashedNines.map { it to true })
+            )
         }
     }
 
+    private fun getGtNine(octopi: Octopi): List<Point> =
+        coords(octopi).filter { (x, y) -> (octopi.get(x, y) ?: 0) > 9 }
 
-    fun step(input: Octopi): Octopi {
-        increment(input)
+
+    private fun step(input: Octopi): Pair<Octopi, Int>  {
+        val result = input.let(::increment)
+            .also { println("After Increment: "); it.print() }
+            .let { flash(getGtNine(it), it) }
+            .also { println("After flash: "); it.print() }
+        return result to result.flatMap { line -> line.filter { it == 0 } }.count()
     }
 
     private suspend fun parseInput(): List<List<Int>> {
         return getInput(2021, 11)
             .split("\n")
             .filter { it.isNotBlank() }
-            .map { line -> line.split("").map { it.toInt() } }
+            .map { line -> line.trim()
+                .split("")
+                .filter { it.isNotBlank() }
+                .map { it.toInt() } }
     }
 
     suspend fun partTwo(): Long {
