@@ -24,7 +24,7 @@ internal class Day10Test {
     @Test
     fun `Part 1`() = runBlocking {
         val result = sut.partOne()
-        assertEquals(344735, result)
+        assertEquals(290691, result)
     }
 
     @Test
@@ -48,6 +48,6 @@ internal class Day10Test {
         coEvery { getInput(any(), any()) } returns testInput
 
         val result = sut.partTwo()
-        assertEquals(1134, result)
+        assertEquals(288957, result)
     }
 }

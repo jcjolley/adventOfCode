@@ -1,13 +1,12 @@
 package advent.twentytwentyone.puzzles
 
 import advent.utilities.getInput
-import java.util.concurrent.ArrayBlockingQueue
 
 class Day10 {
 
     suspend fun partOne(): Int {
         val input = parseInput()
-        return input.mapNotNull { isCorrupted(it) }
+        return input.mapNotNull { getCorruptedInfo(it).first }
             .sumOf(::scoreChar)
     }
 
@@ -19,17 +18,15 @@ class Day10 {
         else -> throw IllegalStateException("Cannot score $c")
     }
 
-    fun isCorrupted(str: String): Char? {
+    fun getCorruptedInfo(str: String): Pair<Char?, List<Char>> {
         val stack = mutableListOf<Char>()
         return str.mapNotNull { c ->
-            // println(" Char is $c ")
-            // println(" Stack is $stack ")
             when {
                 isOpen(c) -> null.also { stack.add(c) }
                 getMatching(stack.last()) != c -> c
                 else -> null.also { stack.removeLast() }
             }
-        }.firstOrNull()
+        }.firstOrNull() to stack
     }
 
     fun isOpen(c: Char) = when (c) {
@@ -41,7 +38,7 @@ class Day10 {
         '(' -> ')'
         '[' -> ']'
         '{' -> '}'
-        '<' -> ')'
+        '<' -> '>'
         else -> throw IllegalStateException("Not an opening character")
     }
 
@@ -51,8 +48,28 @@ class Day10 {
             .filter { it.isNotBlank() }
     }
 
-    suspend fun partTwo(): Int {
+    fun completeString(stack: List<Char>): List<Char> =
+        stack.reversed().map(::getMatching)
+
+    fun scoreCompleted(completed: List<Char>): Long =
+        completed.fold(0L) { acc, c ->
+            5 * acc + when (c) {
+                ')' -> 1
+                ']' -> 2
+                '}' -> 3
+                '>' -> 4
+                else -> throw IllegalStateException("Invalid character during scoring")
+            }
+        }
+
+    suspend fun partTwo(): Long {
         val input = parseInput()
-        return 0
+        val results = input.map { getCorruptedInfo(it) }
+            .filter { it.first == null }
+            .map { completeString(it.second).let(::scoreCompleted) }
+            .sorted()
+            .also { println("Results: $it")}
+
+        return results[results.size / 2]
     }
 }
