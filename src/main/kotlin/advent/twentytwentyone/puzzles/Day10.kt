@@ -44,8 +44,6 @@ class Day10 {
 
     private suspend fun parseInput(): List<String> {
         return getInput(2021, 10)
-            .split("\n")
-            .filter { it.isNotBlank() }
     }
 
     fun completeString(stack: List<Char>): List<Char> =

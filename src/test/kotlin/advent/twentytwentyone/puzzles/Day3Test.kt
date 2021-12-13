@@ -4,9 +4,8 @@ import advent.utilities.getInput
 import io.mockk.coEvery
 import io.mockk.mockkStatic
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 internal class Day3Test {
     private val sut = Day3()
@@ -39,7 +38,7 @@ internal class Day3Test {
             |00010
             |01010
             |
-        """.trimMargin()
+        """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partOne()
         assertEquals(198, result)
@@ -61,7 +60,7 @@ internal class Day3Test {
             |00010
             |01010
             |
-        """.trimMargin()
+        """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partTwo()
         assertEquals(230, result)

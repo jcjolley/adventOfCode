@@ -28,8 +28,6 @@ class Day3 {
 
     suspend fun parseInput(): List<String> {
         return getInput(2021, 3)
-            .split('\n')
-            .filter { it.isNotBlank() }
     }
 
     suspend fun partTwo(): Int {

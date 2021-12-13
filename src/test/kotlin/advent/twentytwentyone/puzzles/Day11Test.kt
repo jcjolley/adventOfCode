@@ -10,21 +10,23 @@ import org.junit.jupiter.api.Test
 internal class Day11Test {
     private val sut = Day11()
 
-    val testInput = """5483143223
-            |2745854711
-            |5264556173
-            |6141336146
-            |6357385478
-            |4167524645
-            |2176841721
-            |6882881134
-            |4846848554
-            |5283751526
-    """.trimMargin()
+    private val testInput = """
+            5483143223
+            2745854711
+            5264556173
+            6141336146
+            6357385478
+            4167524645
+            2176841721
+            6882881134
+            4846848554
+            5283751526
+    """.trimIndent().split("\n").map { it.trim() }.filter { it.isNotBlank() }
+
     @Test
     fun `Part 1`() = runBlocking {
         val result = sut.partOne()
-        assertEquals(290691, result)
+        assertEquals(1697, result)
     }
 
     @Test
@@ -39,7 +41,7 @@ internal class Day11Test {
         coEvery { getInput(any(), any()) } returns testInput
 
         val result = sut.partOne()
-        assertEquals(26397, result)
+        assertEquals(1656, result)
     }
 
     @Test

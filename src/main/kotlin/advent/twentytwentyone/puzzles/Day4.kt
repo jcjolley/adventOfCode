@@ -41,7 +41,6 @@ class Day4 {
 
     private suspend fun parseInput(): Pair<List<Int>, List<Board>> {
         val input = getInput(2021, 4)
-            .split("""\s+\n""".toRegex())
 
         val seq = input.first()
             .split(",")

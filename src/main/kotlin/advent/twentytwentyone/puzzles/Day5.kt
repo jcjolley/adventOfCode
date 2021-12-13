@@ -67,8 +67,6 @@ class Day5 {
 
     private suspend fun parseInput(): List<LineSegment> {
         return getInput(2021, 5)
-            .split('\n')
-            .filter { it.isNotBlank() }
             .map { line ->
                 line.split("""( -> |,)""".toRegex())
                     .filter { it.isNotBlank() }

@@ -21,9 +21,6 @@ class Day1 {
     }
 
     private suspend fun parseInput(): List<Int> {
-        return getInput(2021, 1)
-            .split('\n')
-            .filter { it.isNotBlank() }
-            .map { it.trim().toInt() }
+        return getInput(2021, 1).map { it.toInt() }
     }
 }

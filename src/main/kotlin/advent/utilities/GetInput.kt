@@ -12,14 +12,20 @@ typealias Board = List<List<Int>>
 
 val inputScope = CoroutineScope(Dispatchers.IO)
 
-suspend fun getInput(year: Int, day: Int): String {
-    val input = readFile(getInputFilename(year, day))
-    return input
-        ?: inputScope.async {
+tailrec suspend fun getInput(year: Int, day: Int): List<String> {
+    val file = File(getInputFilename(year, day))
+    return if (file.exists()) {
+        file.readLines()
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+    } else {
+        inputScope.async {
             fetchInput(year, day).also {
                 writeFile(year, day, it)
             }
         }.await()
+        getInput(year, day)
+    }
 }
 
 private suspend fun fetchInput(year: Int, day: Int): String {

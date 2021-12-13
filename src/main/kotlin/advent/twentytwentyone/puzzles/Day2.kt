@@ -55,8 +55,6 @@ class Day2 {
 
     private suspend fun parseInput(): List<SubmarineCommand> {
         return getInput(2021, 2)
-            .split('\n')
-            .filter { it.isNotBlank() }
             .map(::parseCommand)
     }
 }

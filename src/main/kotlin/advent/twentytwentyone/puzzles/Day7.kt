@@ -10,6 +10,11 @@ class Day7 {
         return findMinimumAlignment(crabs, ::getDistance)
     }
 
+    suspend fun partTwo(): Int {
+        val crabs = parseInput()
+        return findMinimumAlignment(crabs, ::getDistancePartTwo)
+    }
+
     private fun findMinimumAlignment(crabs: List<Int>, distanceFn: (Int, Int) -> Int): Int {
         return (0..crabs.maxOrNull()!!).map { i ->
             i to crabs.sumOf { distanceFn(i, it) }
@@ -25,12 +30,8 @@ class Day7 {
 
     private suspend fun parseInput(): List<Int> {
         return getInput(2021, 7)
+            .first()
             .split(",")
             .map { it.toInt() }
-    }
-
-    suspend fun partTwo(): Int {
-        val crabs = parseInput()
-        return findMinimumAlignment(crabs, ::getDistancePartTwo)
     }
 }

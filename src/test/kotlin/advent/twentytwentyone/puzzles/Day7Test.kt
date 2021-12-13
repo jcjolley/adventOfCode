@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class Day7Test {
     private val sut = Day7()
 
-    val testInput = "16,1,2,0,4,2,7,1,2,14"
+    val testInput = "16,1,2,0,4,2,7,1,2,14".split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
     @Test
     fun `Day 7 - Part 1`() = runBlocking {

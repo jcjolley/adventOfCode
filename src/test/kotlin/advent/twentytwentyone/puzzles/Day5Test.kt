@@ -37,7 +37,7 @@ internal class Day5Test {
            |3,4 -> 1,4
            |0,0 -> 8,8
            |5,5 -> 8,2 
-        """.trimMargin()
+        """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partOne()
         assertEquals(5, result)
@@ -57,7 +57,7 @@ internal class Day5Test {
            |3,4 -> 1,4
            |0,0 -> 8,8
            |5,5 -> 8,2 
-        """.trimMargin()
+        """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partTwo()
         assertEquals(12, result)

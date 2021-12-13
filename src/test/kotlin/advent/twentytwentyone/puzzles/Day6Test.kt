@@ -25,7 +25,7 @@ internal class Day6Test {
     @Test
     fun partOneTestCase() = runBlocking {
         mockkStatic(::getInput)
-        coEvery { getInput(any(), any()) } returns "3,4,3,1,2"
+        coEvery { getInput(any(), any()) } returns "3,4,3,1,2".split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partOne()
         assertEquals(5934, result)
@@ -34,7 +34,7 @@ internal class Day6Test {
     @Test
     fun partTwoTestCase() = runBlocking {
         mockkStatic(::getInput)
-        coEvery { getInput(any(), any()) } returns "3,4,3,1,2"
+        coEvery { getInput(any(), any()) } returns "3,4,3,1,2".split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partTwo()
         assertEquals(26984457539, result)

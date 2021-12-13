@@ -1,14 +1,12 @@
 package advent.twentytwentyone.puzzles.one
 
-import advent.twentytwentyone.puzzles.Day1
 import advent.twentytwentyone.puzzles.Day2
 import advent.utilities.getInput
 import io.mockk.coEvery
 import io.mockk.mockkStatic
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 internal class Day2Test {
 
@@ -16,8 +14,8 @@ internal class Day2Test {
 
     @Test
     fun `Day 2 - Dive! - Part One`() = runBlocking {
-       val result = sut.partOne()
-       assertEquals(2215080, result)
+        val result = sut.partOne()
+        assertEquals(2215080, result)
     }
 
     @Test
@@ -36,10 +34,9 @@ internal class Day2Test {
             |down 8
             |forward 2
             |
-        """.trimMargin()
+        """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
         val result = sut.partTwo()
         assertEquals(900, result)
-
     }
 }

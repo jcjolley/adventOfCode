@@ -54,8 +54,6 @@ class Day9 {
 
     private suspend fun parseInput(): HeightMap {
         return getInput(2021, 9)
-            .split("\n")
-            .filter { it.isNotBlank() }
             .map { line ->
                 line.trim()
                     .split("")

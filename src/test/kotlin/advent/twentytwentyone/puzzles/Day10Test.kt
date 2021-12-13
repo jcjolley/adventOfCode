@@ -20,7 +20,7 @@ internal class Day10Test {
         |[<(<(<(<{}))><([]([]()
         |<{([([[(<>()){}]>(<<{{
         |<{([{{}}[<[[[<>{}]]]>[]]
-    """.trimMargin()
+    """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
     @Test
     fun `Part 1`() = runBlocking {
         val result = sut.partOne()

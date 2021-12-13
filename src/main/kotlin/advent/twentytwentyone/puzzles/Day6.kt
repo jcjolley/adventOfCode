@@ -56,6 +56,7 @@ class Day6 {
 
     private suspend fun parseInput(): List<Int> {
         return getInput(2021, 6)
+            .first()
             .split(",")
             .map { it.toInt() }
             .also { println("Input: $it") }

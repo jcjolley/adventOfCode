@@ -15,7 +15,7 @@ internal class Day9Test {
        |9856789892
        |8767896789
        |9899965678 
-    """.trimMargin()
+    """.trimMargin().split("\n").map { it.trim() }.filter { it.isNotBlank() }
     @Test
     fun `Part 1`() = runBlocking {
         val result = sut.partOne()
