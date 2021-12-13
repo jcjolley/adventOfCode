@@ -7,20 +7,17 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class Day11Test {
-    private val sut = Day11()
+internal class Day12Test {
+    private val sut = Day12()
 
-    private val testInput = """
-            5483143223
-            2745854711
-            5264556173
-            6141336146
-            6357385478
-            4167524645
-            2176841721
-            6882881134
-            4846848554
-            5283751526
+    private val testInputOne = """
+        start-A
+        start-b
+        A-c
+        A-b
+        b-d
+        A-end
+        b-end
     """.trimIndent().split("\n").map { it.trim() }.filter { it.isNotBlank() }
 
     @Test
@@ -38,7 +35,7 @@ internal class Day11Test {
     @Test
     fun partOneTestCase() = runBlocking {
         mockkStatic(::getInput)
-        coEvery { getInput(any(), any()) } returns testInput
+        coEvery { getInput(any(), any()) } returns testInputOne
 
         val result = sut.partOne()
         assertEquals(1656, result)
@@ -47,7 +44,7 @@ internal class Day11Test {
     @Test
     fun partTwoTestCase() = runBlocking {
         mockkStatic(::getInput)
-        coEvery { getInput(any(), any()) } returns testInput
+        coEvery { getInput(any(), any()) } returns testInputOne
 
         val result = sut.partTwo()
         assertEquals(288957, result)
